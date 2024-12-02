@@ -49,7 +49,7 @@ let challengeData = [];
 // Function to fetch challenge data from JSON file
 async function fetchChallenges() {
   try {
-    const response = await fetch('challenges.json');
+    const response = await fetch('data/challenges.json');
     challengeData = await response.json();
   } catch (error) {
     console.error("Failed to fetch challenges:", error);
@@ -62,24 +62,56 @@ document.addEventListener("DOMContentLoaded", fetchChallenges);
 // Update showModal to use fetched data
 const showModal = (value) => {
   const modal = document.getElementById("myModal");
-  const span = document.getElementsByClassName("close")[0];
   const headline = document.getElementById("modal-headline");
   const image = document.getElementById("modal-image");
+
+  // Find the challenge by its number
   const challenge = challengeData.find(challenge => challenge.number === value);
 
-  headline.innerText = challenge ? challenge.challenge : "Challenge not found";
-  image.src = challenge ? `path_to_your_images/${challenge.image}` : '';
+  if (challenge) {
+    headline.innerText = challenge.challenge; // Set the headline text
+    image.src = `${challenge.image}`;  // Set the correct image path
+    image.alt = challenge.challenge;         // Optional: set alt text
+  } else {
+    headline.innerText = "Challenge not found";
+    image.src = ""; // Clear the image if challenge not found
+    image.alt = "";
+  }
 
+  // Display the modal
   modal.style.display = "block";
-  span.onclick = function() {
+
+  // Close modal on click
+  const closeBtn = document.getElementsByClassName("close")[0];
+  closeBtn.onclick = function () {
     modal.style.display = "none";
   };
-  window.onclick = function(event) {
-    if (event.target == modal) {
+  window.onclick = function (event) {
+    if (event.target === modal) {
       modal.style.display = "none";
     }
   };
 };
+
+
+
+
+fetch('data/challenges.json')
+          .then(response => response.json())
+          .then(data => console.log(data));
+
+          fetch('data/challenges.json')
+  .then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+    // additional logic to use the data
+  })
+  .catch(error => console.error('Error fetching challenges:', error));
 
   
   // Update valueGenerator function to call showModal
