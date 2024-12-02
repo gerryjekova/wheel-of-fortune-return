@@ -32,6 +32,9 @@
     top: 0;
     padding: 0;
   }
+  #img { 
+    display: inherit;
+  }
   @keyframes rotate {
     100% {
       transform: rotate(360deg);
