@@ -44,28 +44,43 @@ let myChart = new Chart(wheel, {
   }
 });
 
-// Function to display the modal with the challenge info
+let challengeData = [];
+
+// Function to fetch challenge data from JSON file
+async function fetchChallenges() {
+  try {
+    const response = await fetch('challenges.json');
+    challengeData = await response.json();
+  } catch (error) {
+    console.error("Failed to fetch challenges:", error);
+  }
+}
+
+// Call fetchChallenges on page load
+document.addEventListener("DOMContentLoaded", fetchChallenges);
+
+// Update showModal to use fetched data
 const showModal = (value) => {
-    const modal = document.getElementById("myModal");
-    const span = document.getElementsByClassName("close")[0];
-    const headline = document.getElementById("modal-headline");
-    const image = document.getElementById("modal-image");
-  
-    headline.innerText = `Challenge Number: ${value}`;
-    image.src = `path_to_your_images/challenge_${value}.png`;  // Update this path with your actual images path
-  
-    modal.style.display = "block";
-  
-    span.onclick = function() {
-      modal.style.display = "none";
-    };
-  
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    };
+  const modal = document.getElementById("myModal");
+  const span = document.getElementsByClassName("close")[0];
+  const headline = document.getElementById("modal-headline");
+  const image = document.getElementById("modal-image");
+  const challenge = challengeData.find(challenge => challenge.number === value);
+
+  headline.innerText = challenge ? challenge.challenge : "Challenge not found";
+  image.src = challenge ? `path_to_your_images/${challenge.image}` : '';
+
+  modal.style.display = "block";
+  span.onclick = function() {
+    modal.style.display = "none";
   };
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+};
+
   
   // Update valueGenerator function to call showModal
   const valueGenerator = (angleValue) => {
