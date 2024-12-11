@@ -114,3 +114,33 @@
     cursor: pointer;
   }
   
+  .language-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .language-toggle button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border: 2px solid #6414e9;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #6414e9;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .language-toggle button.active {
+    background-color: #6414e9;
+    color: #ffffff;
+  }
+  
+  .language-toggle button:hover {
+    background-color: #c3a3f1;
+    color: #ffffff;
+  }
+  
