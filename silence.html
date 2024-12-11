@@ -1,48 +1,43 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spin Wheel App</title>
-    <!-- Google Font -->
+    <title>Wheel of Silence</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
       rel="stylesheet"
     />
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles-silence.css" />
   </head>
   <body>
     <div class="nav-links">
       <a href="index.html">Main Wheel</a>
-      <a href="silence.html">Wheel of Silence</a>
-    </div>    
-    <div class="language-toggle">
-      <button id="btn-bulgarian" class="active">Bulgarian</button>
-      <button id="btn-english">English</button>
+      <a href="silence.html" class="active">Wheel of Silence</a>
     </div>
+
     <div class="wrapper">
       <div class="container">
         <canvas id="wheel"></canvas>
         <button id="spin-btn">Spin</button>
+        <img src="assets/left-arrow (1).png" alt="spinner arrow" />
       </div>
       <div id="final-value">
         <p>Click On The Spin Button To Start</p>
       </div>
     </div>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <h2 id="modal-headline"></h2>
-          <img id="modal-image" src="assets" alt="Challenge Image" style="width:100%; height:auto;">
-        </div>
-      </div>
 
-      <!-- fetchings the json -->
-     
+    <!-- Modal for the Wheel of Silence -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modal-headline"></h2>
+      </div>
+    </div>
+
     <!-- Chart JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <!-- Chart JS Plugin for displaying text over chart -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"></script>
     <!-- Script -->
-    <script src="scripts/script1.js"></script>
+    <script src="scripts/wheel_of_silence.js"></script>
   </body>
 </html>

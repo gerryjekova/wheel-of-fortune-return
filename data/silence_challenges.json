@@ -1,0 +1,8 @@
+[
+    { "number": 1, "challenge": "1 minute of silence" },
+    { "number": 2, "challenge": "2 minutes of silence" },
+    { "number": 3, "challenge": "5 minutes of silence" },
+    { "number": 4, "challenge": "10 minutes of silence" },
+    { "number": 5, "challenge": "15 minutes of silence" },
+    { "number": 6, "challenge": "30 minutes of silence" }
+]
