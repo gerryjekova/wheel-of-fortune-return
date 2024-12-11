@@ -59,40 +59,53 @@ async function fetchChallenges() {
 // Call fetchChallenges on page load
 document.addEventListener("DOMContentLoaded", fetchChallenges);
 
-// Update showModal to use fetched data
+
+let currentLanguage = 'bg'; // Default language is Bulgarian
+
+// Handle language toggle
+document.getElementById('btn-bulgarian').addEventListener('click', () => {
+  currentLanguage = 'bg';
+  updateLanguageButtons();
+});
+
+document.getElementById('btn-english').addEventListener('click', () => {
+  currentLanguage = 'en';
+  updateLanguageButtons();
+});
+
+function updateLanguageButtons() {
+  document.getElementById('btn-bulgarian').classList.toggle('active', currentLanguage === 'bg');
+  document.getElementById('btn-english').classList.toggle('active', currentLanguage === 'en');
+}
+
+// Show modal with the correct language
 const showModal = (value) => {
   const modal = document.getElementById("myModal");
   const headline = document.getElementById("modal-headline");
   const image = document.getElementById("modal-image");
 
-  // Find the challenge by its number
   const challenge = challengeData.find(challenge => challenge.number === value);
 
   if (challenge) {
-    headline.innerText = challenge.challenge; // Set the headline text
-    image.src = `${challenge.image}`;  // Set the correct image path
-    image.alt = challenge.challenge;         // Optional: set alt text
+    headline.innerText = challenge.challenge[currentLanguage];
+    image.src = `assets/${challenge.image}`;
+    image.alt = challenge.challenge[currentLanguage];
   } else {
     headline.innerText = "Challenge not found";
-    image.src = ""; // Clear the image if challenge not found
+    image.src = "";
     image.alt = "";
   }
 
-  // Display the modal
   modal.style.display = "block";
 
-  // Close modal on click
   const closeBtn = document.getElementsByClassName("close")[0];
-  closeBtn.onclick = function () {
-    modal.style.display = "none";
-  };
-  window.onclick = function (event) {
+  closeBtn.onclick = () => (modal.style.display = "none");
+  window.onclick = (event) => {
     if (event.target === modal) {
       modal.style.display = "none";
     }
   };
 };
-
 
 
 
