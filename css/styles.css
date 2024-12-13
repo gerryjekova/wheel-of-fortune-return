@@ -113,6 +113,7 @@
     text-decoration: none;
     cursor: pointer;
   }
+<<<<<<< HEAD
   
   .language-toggle {
     position: absolute;
@@ -166,4 +167,6 @@
     background-color: #6414e9;
     color: #ffffff;
   }
+=======
+>>>>>>> parent of 7541517 (added language logic)
   
