@@ -126,27 +126,40 @@ fetch('data/challenges.json')
     }
   };
   
+  
 // Spin logic
 let count = 0;
 let resultValue = 101;
+
 spinBtn.addEventListener("click", () => {
   spinBtn.disabled = true;
   finalValue.innerHTML = `<p>Good Luck!</p>`;
-  let randomDegree = Math.floor(Math.random() * 360);
-  let rotationInterval = setInterval(() => {
-    myChart.options.rotation += resultValue;
-    myChart.update();
-    if (myChart.options.rotation >= 360) {
-      count += 1;
-      resultValue -= 5;
-      myChart.options.rotation = 0;
-    } else if (count > 15 && myChart.options.rotation === randomDegree) {
-      valueGenerator(randomDegree);
-      clearInterval(rotationInterval);
-      count = 0;
-      resultValue = 101;
-    }
-  }, 10);
+
+  let randomIndex = Math.floor(Math.random() * 20); // Random section
+  let randomDegree = rotationValues[randomIndex].minDegree + 9; // Center of the section
+  let arrowOffset = 90; // Align middle-right with the arrow
+  let finalRotation = 360 * 5 + (arrowOffset - randomDegree); // 5 full rotations + alignment
+
+  // Apply rotation using CSS keyframes
+  wheel.style.setProperty("--final-rotation", `${finalRotation}deg`);
+  wheel.style.animation = "rotate 4s ease-out";
+
+  // After animation ends, display the result value and freeze the wheel
+  setTimeout(() => {
+    // Display the result value
+    const resultValue = randomIndex + 1; // Result index +1 (1-based numbering)
+    finalValue.innerHTML = `<p>Value: ${resultValue}</p>`;
+
+    // Freeze the wheel by setting the final rotation directly
+    wheel.style.animation = ""; // Stop the animation
+    wheel.style.transform = `rotate(${finalRotation % 360}deg)`; // Apply the final rotation directly
+
+    // Wait 2 seconds before showing the modal
+    setTimeout(() => {
+      showModal(resultValue); // Show the modal
+      spinBtn.disabled = false;
+    }, 2000); // 2-second delay for the modal
+  }, 4000); // Match the animation duration
 });
 
 
