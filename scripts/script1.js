@@ -2,9 +2,9 @@ const wheel = document.getElementById("wheel");
 const spinBtn = document.getElementById("spin-btn");
 const finalValue = document.getElementById("final-value");
 
-// Redefine rotation values for a 20-section wheel
+// Redefine rotation values for a 14-section wheel
 const rotationValues = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 14; i++) {
   rotationValues.push({
     minDegree: i * 18,
     maxDegree: (i + 1) * 18 - 1,
@@ -12,12 +12,12 @@ for (let i = 0; i < 20; i++) {
   });
 }
 
-// Define data for 20 equally sized sections
-const data = new Array(20).fill(1);  // All sections are equally likely
+// Define data for 14 equally sized sections
+const data = new Array(14).fill(1);  // All sections are equally likely
 
 // Define background colors for each piece
 const pieColors = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 14; i++) {
   pieColors.push(i % 2 === 0 ? "#8b35bc" : "#b163da");
 }
 
@@ -26,7 +26,7 @@ let myChart = new Chart(wheel, {
   plugins: [ChartDataLabels],
   type: "pie",
   data: {
-    labels: Array.from({ length: 20 }, (_, i) => i + 1),
+    labels: Array.from({ length: 14 }, (_, i) => i + 1),
     datasets: [{ backgroundColor: pieColors, data: data }]
   },
   options: {
@@ -96,7 +96,7 @@ const showModal = (value) => {
 
 
 
-fetch('data/challenges.json')
+  fetch('data/challenges.json')
           .then(response => response.json())
           .then(data => console.log(data));
 
@@ -135,8 +135,8 @@ spinBtn.addEventListener("click", () => {
   spinBtn.disabled = true;
   finalValue.innerHTML = `<p>Good Luck!</p>`;
 
-  let randomIndex = Math.floor(Math.random() * 20); // Random section
-  let randomDegree = rotationValues[randomIndex].minDegree + 9; // Center of the section
+  let randomIndex = Math.floor(Math.random() * 14); // Random section
+  let randomDegree = rotationValues[randomIndex].minDegree + 8; // Center of the section
   let arrowOffset = 90; // Align middle-right with the arrow
   let finalRotation = 360 * 5 + (arrowOffset - randomDegree); // 5 full rotations + alignment
 
@@ -158,7 +158,7 @@ spinBtn.addEventListener("click", () => {
     setTimeout(() => {
       showModal(resultValue); // Show the modal
       spinBtn.disabled = false;
-    }, 2000); // 2-second delay for the modal
+    }, 1400); // 2-second delay for the modal
   }, 4000); // Match the animation duration
 });
 
