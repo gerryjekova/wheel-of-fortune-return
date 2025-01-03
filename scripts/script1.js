@@ -2,12 +2,13 @@ const wheel = document.getElementById("wheel");
 const spinBtn = document.getElementById("spin-btn");
 const finalValue = document.getElementById("final-value");
 
-// Redefine rotation values for a 14-section wheel
 const rotationValues = [];
+const sectionSize = 360 / 14;  // Adjusted to use 25.71 degrees per section (360 / 14)
+
 for (let i = 0; i < 14; i++) {
   rotationValues.push({
-    minDegree: i * 18,
-    maxDegree: (i + 1) * 18 - 1,
+    minDegree: i * sectionSize,
+    maxDegree: (i + 1) * sectionSize - 1,
     value: i + 1
   });
 }
@@ -136,7 +137,7 @@ spinBtn.addEventListener("click", () => {
   finalValue.innerHTML = `<p>Good Luck!</p>`;
 
   let randomIndex = Math.floor(Math.random() * 14); // Random section
-  let randomDegree = rotationValues[randomIndex].minDegree + 8; // Center of the section
+  let randomDegree = rotationValues[randomIndex].minDegree + 9; // Center of the section
   let arrowOffset = 90; // Align middle-right with the arrow
   let finalRotation = 360 * 5 + (arrowOffset - randomDegree); // 5 full rotations + alignment
 
