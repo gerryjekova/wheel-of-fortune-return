@@ -1,104 +1,17 @@
 [
-    {
-        "number": 1,
-        "challenge": { "bg": "5-10 Минути импровизиран ASMR :D", "en": "5-10 Minutes of Improvised ASMR :D" },
-        "image": "assets/5-10 min of ASMR.png"
-    },
-    {
-        "number": 2,
-        "challenge": { "bg": "Балансирам нещо на главата си за 10 мин", "en": "Balance something on my head for 10 minutes" },
-        "image": "assets/балансирам нещо на главата си за 10 мин.png"
-    },
-    {
-        "number": 3,
-        "challenge": { "bg": "Бързи Рисунки с Теми от Чата_ 20 минути – всяка минута рисуваш нещо, което зрителите поискат", "en": "Quick Sketches with Chat Themes – 20 minutes, drawing something viewers suggest every minute" },
-        "image": "assets/Бързи Рисунки с Теми от Чата_ 20 минути – всяка минута рисуваш нещо, което зрителите поискат.png"
-    },
-    {
-        "number": 4,
-        "challenge": { "bg": "Говоря ви само със звуци от саундборда ми за 15 мин", "en": "Talk to you using only soundboard sounds for 15 minutes" },
-        "image": "assets/Говоря ви само със звуци от саундборда ми за 15 мин.png"
-    },
-    {
-        "number": 5,
-        "challenge": { "bg": "Истина или предизвикателство с чата или ПешоGPT", "en": "Truth or Dare with Chat or PeshoGPT" },
-        "image": "assets/Истина или предизвикателство с чата_Пешо.png"
-    },
-    {
-        "number": 6,
-        "challenge": { "bg": "Изучи Случаен Танц Гледай танцово видео и опитай да го повториш", "en": "Learn a Random Dance – Watch a dance video and try to mimic it" },
-        "image": "assets/Изучи Случаен Танц_ Гледай супер нелепо танцово видео и опитай да го повториш.png"
-    },
-    {
-        "number": 7,
-        "challenge": { "bg": "Отключи заключено видео по избор за хората в чата и реакт на момента", "en": "Unlock a locked video chosen by chat and react to it live" },
-        "image": "assets/Отключи заключено видео по избор за хората в чата и реакт на момента.png"
-    },
-    {
-        "number": 8,
-        "challenge": { "bg": "Пий 2 шота твърд алкохол", "en": "Take 2 shots of hard liquor" },
-        "image": "assets/Пий 2 шота твърд алкохол.png"
-    },
-    {
-        "number": 9,
-        "challenge": { "bg": "Правя се на професионален стрийм критик и хващам профила на някой произволен стриймър (ако няма някой желаещ от чата) и му правя ревю на стрийма и социалките с обратна връзка", "en": "Act like a professional stream critic and review a random streamer’s profile or one chosen by chat, giving feedback on their stream and socials" },
-        "image": "assets/Правя се на професионален стрийм критик и хващам профила на някой произволен стриймър (ако няма някой желаещ от чата) и му правя.png"
-    },
-    {
-        "number": 10,
-        "challenge": { "bg": "рисувам си мустаци и 1 вежда - 20 мин", "en": "Draw a mustache and one eyebrow on myself – 20 minutes" },
-        "image": "assets/рисувам си мустаци и 1 вежда - 20 мин.png"
-    },
-    {
-        "number": 11,
-        "challenge": { "bg": "Ролплейвам клоун 20 мин", "en": "Roleplay a clown for 20 minutes" },
-        "image": "assets/Ролплейвам клоун 20 мин.png"
-    },
-    {
-        "number": 12,
-        "challenge": { "bg": "Ролплейвам Онлайн Гуру за себеразвитие 20 мин", "en": "Roleplay an Online Self-Improvement Guru for 20 minutes" },
-        "image": "assets/Ролплейвам Онлайн Гуру за себеразвитие 20 мин.png"
-    },
-    {
-        "number": 13,
-        "challenge": { "bg": "Пускаме един ТикТок лайв за 20-30 мин и чата диктува всичко дето казвам и правя без да се обяснявам на хората от ТикТок", "en": "Start a TikTok Live for 20-30 minutes where chat dictates everything I say and do without explaining to TikTok viewers" },
-        "image": "assets/Пускаме един ТикТок лайв за 20-30 мин и чата диктува всичко дето казвам и правя без да се обяснявам на хората от ТикТок.png"
-    },
-    {
-        "number": 14,
-        "challenge": { "bg": "Ролплейвам Rizz master и се свалям с всички 20 мин", "en": "Roleplay as a Rizz master and flirt with everyone for 20 minutes" },
-        "image": "assets/Ролплейвам Rizz master и се свалям с всички 20 мин.png"
-    },
-    {
-        "number": 15,
-        "challenge": { "bg": "Ще изям цял лимон и ще се опитам да не правя кисел фейс", "en": "Eat an entire lemon and try not to make a sour face" },
-        "image": "assets/Ще изям цял лимон и ще се опитам да не правя кисел фейс.png"
-    },
-    {
-        "number": 16,
-        "challenge": { "bg": "Мисли песни или рими_рап с нещата, които се пишат в чата", "en": "Make up songs or rhymes/rap about things written in chat" },
-        "image": "assets/Мисли песни или рими_рап с нещата, които се пишат в чата.png"
-    },
-    {
-        "number": 17,
-        "challenge": { "bg": "Накарайте ме да напиша_нарисувам нещо на бялата дъска до мен", "en": "Make me write/draw something on the whiteboard next to me" },
-        "image": "assets/накарайте ме да напиша_нарисувам нещо на бялата дъска до мен.png"
-    },
-    {
-        "number": 18,
-        "challenge": { "bg": "Пиши на някой рандом и му говори луди работи", "en": "Message someone random and say crazy stuff to them" },
-        "image": "assets/Пиши на някой рандом и му говори луди работи.png"
-    },
-    {
-        "number": 19,
-        "challenge": { "bg": "Сложи по един чорап на всяка ръка и се опитай да вършиш неща на компа така 10 минути", "en": "Put a sock on each hand and try to use the computer like that for 10 minutes" },
-        "image": "assets/Сложи по един чорап на всяка ръка и се опитай да вършиш неща на компа така 10 минути.png"
-    },
-    {
-        "number": 20,
-        "challenge": { "bg": "Ролплейвам ясновидка 20 мин", "en": "Roleplay a fortune teller for 20 minutes" },
-        "image": "assets/Ролплейвам ясновидка 20 мин.png"
-    }
+    {"number": 1, "challenge": "1 - Балансирам нещо на главата си за 10 мин", "image": "assets/балансирам нещо на главата си за 10 мин.png"},
+    {"number": 2, "challenge": "2 - 60 секундни рисунки с теми от чата - 10 мин", "image": "assets/Бързи Рисунки с Теми от Чата_ 20 минути – всяка минута рисуваш нещо, което зрителите поискат.png"},
+    {"number": 3, "challenge": "3 - Говоря ви само със звуци от саундборда ми за 10 мин", "image": "assets/Говоря ви само със звуци от саундборда ми за 15 мин.png"},
+    {"number": 4, "challenge": "4 - 1 Истина и 1 Предизвикателство", "image": "assets/Истина или предизвикателство с чата_Пешо.png"},
+    {"number": 5, "challenge": "5 - Отключи заключено видео по избор за хората в чата и реакт на момента", "image": "assets/Отключи заключено видео по избор за хората в чата и реакт на момента.png"},
+    {"number": 6, "challenge": "6 - 50 мл твърд алкохол :Д", "image": "assets/Пий 2 шота твърд алкохол.png"},
+    {"number": 7, "challenge": "7 - Сложи по един чорап на всяка ръка и се опитай да вършиш неща на компа така - 10 мин", "image": "assets/Сложи по един чорап на всяка ръка и се опитай да вършиш неща на компа така 10 минути.png"},
+    {"number": 8, "challenge": "8 - Преструвам се на клоун - 10 мин", "image": "assets/Ролплейвам клоун 20 мин.png"},
+    {"number": 9, "challenge": "9 -  1 Истина и 1 Предизвикателство (2Х ШАНС ДНЕС)", "image": "assets/Истина или предизвикателство с чата_Пешо.png"},
+    {"number": 10, "challenge": "10 - Свалям се с всички в чата - 10 мин", "image": "assets/Ролплейвам Rizz master и се свалям с всички 20 мин.png"},
+    {"number": 11, "challenge": "11 - Пишa на някой рандом и му говоря луди работи", "image": "assets/Пиши на някой рандом и му говори луди работи.png"},
+    {"number": 12, "challenge": "12 - Мисля рандом рап песни с това, което се говори в чата 5 мин", "image": "assets/Мисли песни или рими_рап с нещата, които се пишат в чата.png"},
+    {"number": 13, "challenge": "13 - Накарайте ме да напиша/нарисувам нещо на бялата дъска до мен", "image": "assets/накарайте ме да напиша_нарисувам нещо на бялата дъска до мен.png"},
+    {"number": 14, "challenge": "14 - Правя се на ясновидка за 10 мин", "image": "assets/Ролплейвам ясновидка 20 мин.png" }
 ]
-
   
