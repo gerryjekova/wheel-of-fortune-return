@@ -147,7 +147,7 @@ spinBtn.addEventListener("click", () => {
 // Звукови файлове
 const tickSound = new Audio('sounds/tick.mp3');
 const finishSound = new Audio('sounds/finish.mp3');
-const shortFinishSound = new Audio('sounds/short-finish.mp3');
+const shortFinishSound = new Audio('sounds/nai-golemiq-pedal.mp3');
 
 // Променливи за таймера
 let timer;
