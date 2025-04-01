@@ -32,12 +32,25 @@
   #wheel {
     max-height: inherit;
     width: inherit;
-    top: 0;
     padding: 0;
   }
+
+  img[alt="spinner arrow"] {
+    position: absolute;
+    width: 60px; /* Adjust size as needed */
+    height: 60px;
+    top: 50%; /* Center vertically */
+    right: -25px; /* Slightly outside the wheel's boundary */
+    transform: translateY(-50%);
+    z-index: 10; /* Ensure it appears above the wheel */
+  }
+
   @keyframes rotate {
-    100% {
-      transform: rotate(360deg);
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(var(--final-rotation));
     }
   }
   #spin-btn {
@@ -84,48 +97,278 @@
     }
   }
 
+  /* Existing desktop modal styles */
+.modal {
+  display: none;
+  padding: 2px;
+  position: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: none;
+  z-index: 1000;
+}
+
+.modal-content {
+  align-items: center;
+  text-shadow: 2px 2px 8px #00ccff;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: underline;
+  font-family: Verdana, sans-serif;
+  padding: 100px;
+  display: center;
+  width: 1000px;
+  height: 1000px;
+  margin-left: 750px;
+  margin-top: 50px;
+}
+
+.close {
+  color: #00fff2;
+  padding: 15px;
+  float: right;
+  font-size: 70px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: rgb(255, 0, 0);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Mobile-specific styles */
+@media screen and (max-width: 768px) {
   .modal {
-    background-color: #ffd903d5;
-    display: none; 
-    padding: 2px;
-    position: center;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: none;
+    background-color: #ffd903d5; /* Keep your background color */
+    position: fixed; /* Center relative to the viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    width: 90%; /* Responsive width */
+    max-width: 400px; /* Limit size on larger screens */
+    height: auto; /* Adjust height automatically based on content */
+    max-height: 90%; /* Ensure it fits within the viewport */
+    padding: 10px;
+    overflow: hidden; /* Prevent content overflow */
+    border-radius: 10px; /* Rounded corners */
     z-index: 1000;
   }
-  
+
   .modal-content {
-    align-items: center;
-    text-shadow: 2px 2px 8px #00ccff;
-    font-size: 25px;
+    text-shadow: 2px 2px 8px #00ccff; /* Keep your text shadow */
+    font-size: 18px; /* Adjust size for smaller screens */
     font-weight: bold;
     text-align: center;
-    text-transform:uppercase;
+    text-transform: uppercase;
     text-decoration: underline;
     font-family: Verdana, sans-serif;
-    padding: 100px;
-    display: center;
-    width: 1000px;
-    height: 1000px;
-    margin-left: 750px;
-    margin-top: 50px;
+    padding: 20px;
+    width: 100%; /* Ensure the content scales with the modal */
+    max-width: 300px; /* Limit width for responsiveness */
+    margin: 0 auto; /* Center content inside the modal */
   }
-  
+
   .close {
-    color: #00fff2;
-    padding: 15px;
-    float: right;
-    font-size: 70px;
+    position: absolute; /* Properly position the close button */
+    top: 10px;
+    right: 10px;
+    color: #00fff2; /* Keep your color */
+    font-size: 30px; /* Adjust size for smaller screens */
     font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: rgb(255, 0, 0);
-    text-decoration: none;
     cursor: pointer;
   }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #c3a3f1, #6414e9);
+}
+.wrapper {
+  width: 90%;
+  max-width: 34.37em;
+  max-height: 90vh;
+  background-color: #ffffff20;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  padding: 3em;
+  border-radius: 1em;
+  box-shadow: 0 4em 5em rgba(27, 8, 53, 0.2);
+  overflow-y: auto;
+}
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+#wheel {
+  max-height: inherit;
+  width: inherit;
+  top: 0;
+  padding: 0;
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+#spin-btn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  height: 28%;
+  width: 29%;
+  margin-top: 0%;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2;
+  background: radial-gradient(#ff00c8 50%, #e8ff19 85%);
+  color: #000000;
+  text-transform: uppercase;
+  font-size: 1.8em;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+.img {
+  position: absolute;
+  width: 4em;
+  top: 20%;
+  right: -8%;
+}
+#final-value {
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 1.5em;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Стилове за секцията с предизвикателство (заместваща модала) */
+#challenge-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  border: 2px solid #8b35bc;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#challenge-headline {
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  text-shadow: 0 0 5px #8b35bc;
+}
+
+.challenge-content {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+#challenge-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Стилове за таймера */
+#timer-container {
+  margin-top: 20px;
+  text-align: center;
+  padding: 15px;
+  border: 2px solid #8b35bc;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+#timer-title {
+  color: white;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+#timer-display {
+  font-size: 2.5em;
+  margin: 10px 0;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 5px #8b35bc;
+}
+
+#timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#timer-controls button {
+  padding: 8px 15px;
+  background: linear-gradient(135deg, #8b35bc, #b163da);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+#timer-controls button:hover {
+  background: linear-gradient(135deg, #6414e9, #8b35bc);
+  transform: scale(1.05);
+}
+
+#timer-controls button:active {
+  transform: scale(0.95);
+}
+
+#multi-timer-info {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #fff;
+  background-color: rgba(139, 53, 188, 0.4);
+  padding: 5px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    font-size: 12px;
+    padding: 2em;
+    width: 95%;
+  }
   
+  #timer-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #timer-controls button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
