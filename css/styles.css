@@ -111,21 +111,22 @@
 }
 
 .modal-content {
-  align-items: center;
-  text-shadow: 2px 2px 8px #00ccff;
-  font-size: 25px;
-  font-weight: bold;
-  text-align: center;
-  text-transform: uppercase;
-  text-decoration: underline;
-  font-family: Verdana, sans-serif;
-  padding: 100px;
-  display: center;
-  width: 1000px;
-  height: 1000px;
-  margin-left: 750px;
-  margin-top: 50px;
+    align-items: center;
+    text-shadow: 2px 2px 8px #00ccff;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-family: Verdana, sans-serif;
+    /* padding: 100px; */
+    display: center;
+    width: 32rem;
+    /* height: 32rem; */
+    margin-left: 1rem;
+    margin-top: 9rem;
 }
+
 
 .close {
   color: #00fff2;
