@@ -186,6 +186,7 @@
   }
 }
 
+/* Хоризонтален layout с гласуване */
 * {
   padding: 0;
   margin: 0;
@@ -195,37 +196,57 @@
 body {
   height: 100vh;
   background: linear-gradient(135deg, #c3a3f1, #6414e9);
+  overflow-x: hidden;
 }
 .wrapper {
-  width: 90%;
-  max-width: 34.37em;
-  max-height: 90vh;
-  background-color: #ffffff20;
+  width: 95%;
+  max-width: 1200px;
+  height: 90vh;
+  background-color: rgba(255, 255, 255, 0.15);
   position: fixed;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  padding: 3em;
+  padding: 2em;
   border-radius: 1em;
   box-shadow: 0 4em 5em rgba(27, 8, 53, 0.2);
-  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  overflow: hidden;
 }
+
+/* Контейнер за колелото */
+.wheel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 35%;
+  height: 100%;
+  position: relative;
+}
+
 .container {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 80%;
 }
+
 #wheel {
-  max-height: inherit;
-  width: inherit;
+  max-height: 100%;
+  width: 100%;
   top: 0;
   padding: 0;
 }
+
 @keyframes rotate {
   100% {
     transform: rotate(360deg);
   }
 }
+
 #spin-btn {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -236,31 +257,59 @@ body {
   margin-top: 0%;
   border-radius: 50%;
   cursor: pointer;
-  border: 2;
+  border: 2px solid #ff00c8;
   background: radial-gradient(#ff00c8 50%, #e8ff19 85%);
   color: #000000;
   text-transform: uppercase;
-  font-size: 1.8em;
+  font-size: 1.5em;
   letter-spacing: 0.1em;
   font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(255, 0, 200, 0.5);
 }
-.img {
-  position: absolute;
-  width: 4em;
-  top: 20%;
-  right: -8%;
+
+#spin-btn:hover {
+  box-shadow: 0 0 20px rgba(255, 0, 200, 0.8);
+  transform: translate(-50%, -50%) scale(1.05);
 }
+
 #final-value {
-  font-size: 1.5em;
+  font-size: 1.2em;
   text-align: center;
-  margin-top: 1.5em;
+  margin-top: 10px;
   color: #ffffff;
   font-weight: 500;
 }
 
-/* Стилове за секцията с предизвикателство (заместваща модала) */
+/* Контейнер за дясната част (предизвикателство, таймер и гласуване) */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 60%;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Скрива скролбара но запазва функционалността */
+.content-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.content-container::-webkit-scrollbar-thumb {
+  background: rgba(139, 53, 188, 0.5);
+  border-radius: 10px;
+}
+
+/* Стилове за секцията с предизвикателство */
 #challenge-section {
-  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 15px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
@@ -277,7 +326,7 @@ body {
   color: #ffffff;
   text-align: center;
   margin-bottom: 15px;
-  font-size: 1.3em;
+  font-size: 1.5em;
   text-shadow: 0 0 5px #8b35bc;
 }
 
@@ -296,38 +345,41 @@ body {
 
 /* Стилове за таймера */
 #timer-container {
-  margin-top: 20px;
-  text-align: center;
-  padding: 15px;
-  border: 2px solid #8b35bc;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 3px solid #8b35bc;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
   animation: fadeIn 0.5s ease-in-out;
+  text-align: center;
 }
 
 #timer-title {
   color: white;
-  font-size: 1.2em;
-  margin-bottom: 5px;
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-shadow: 0 0 3px #6414e9;
 }
 
 #timer-display {
-  font-size: 2.5em;
-  margin: 10px 0;
+  font-size: 3em;
+  margin: 15px 0;
   font-weight: bold;
   color: #fff;
-  text-shadow: 0 0 5px #8b35bc;
+  text-shadow: 0 0 8px #8b35bc;
 }
 
 #timer-controls {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 15px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 #timer-controls button {
-  padding: 8px 15px;
+  padding: 10px 20px;
   background: linear-gradient(135deg, #8b35bc, #b163da);
   color: white;
   border: none;
@@ -335,6 +387,9 @@ body {
   cursor: pointer;
   font-weight: bold;
   transition: all 0.3s ease;
+  min-width: 100px;
+  flex: 1;
+  font-size: 1.1em;
 }
 
 #timer-controls button:hover {
@@ -347,29 +402,341 @@ body {
 }
 
 #multi-timer-info {
-  margin-top: 10px;
+  margin-top: 15px;
   font-weight: bold;
   color: #fff;
-  background-color: rgba(139, 53, 188, 0.4);
-  padding: 5px;
+  background-color: rgba(139, 53, 188, 0.6);
+  padding: 8px;
   border-radius: 5px;
   display: inline-block;
+  font-size: 1.1em;
+}
+
+/* Стилове за системата за гласуване */
+#vote-container {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  border: 2px solid #6414e9;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.vote-header {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+#vote-title {
+  color: white;
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-shadow: 0 0 5px #6414e9;
+}
+
+.vote-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.vote-tab {
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.vote-tab.active {
+  background: linear-gradient(135deg, #8b35bc, #6414e9);
+}
+
+.vote-panel {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 0 0 10px 10px;
+  min-height: 200px;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.option-text {
+  color: white;
+  flex-grow: 1;
+}
+
+.vote-count {
+  background: #6414e9;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin: 0 10px;
+}
+
+.vote-btn {
+  background: linear-gradient(135deg, #8b35bc, #6414e9);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.vote-btn:hover {
+  transform: scale(1.05);
+}
+
+.input-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.input-container input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.input-container input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.input-container button {
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #8b35bc, #6414e9);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.vote-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.vote-footer button {
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #8b35bc, #6414e9);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.vote-footer button:hover {
+  transform: scale(1.05);
+}
+
+.winner {
+  border: 2px solid gold;
+  background: rgba(255, 215, 0, 0.2) !important;
+  position: relative;
+}
+
+.winner::after {
+  content: "👑";
+  position: absolute;
+  top: -15px;
+  right: 10px;
+  font-size: 1.5em;
+}
+
+/* Адаптивен дизайн */
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    flex-direction: column;
+    height: auto;
+    padding: 1.5em;
+    overflow-y: auto;
+  }
+  
+  .wheel-container, .content-container {
+    width: 100%;
+  }
+  
+  .wheel-container {
+    height: 50vh;
+    margin-bottom: 20px;
+  }
+  
+  .content-container {
+    height: auto;
+    max-height: 40vh;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .wrapper {
-    font-size: 12px;
-    padding: 2em;
-    width: 95%;
+    padding: 1em;
+    width: 98%;
   }
   
   #timer-controls {
     flex-direction: column;
-    align-items: center;
   }
   
   #timer-controls button {
     width: 100%;
     margin-bottom: 5px;
+  }
+  
+  #wheel {
+    max-height: 300px;
+  }
+}
+
+/* Добавете/заменете тези стилове във вашия CSS файл */
+
+/* Контейнер за колелото - подобрено позициониране */
+.wheel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Добавено за по-добро центриране */
+  width: 35%;
+  height: 100%;
+  position: relative;
+  overflow: hidden; /* Предотвратява изтичане на съдържание */
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: auto; /* Променено от фиксирана височина */
+  aspect-ratio: 1 / 1; /* Осигурява квадратно съотношение */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Центрира контейнера */
+  max-height: 70vh; /* Ограничава максималната височина */
+}
+
+#wheel {
+  max-width: 100%;
+  height: auto !important; /* Важно - принуждава правилно оразмеряване */
+  display: block; /* Подобрява визуализирането */
+  margin: 0 auto; /* Центрира колелото */
+}
+
+/* Обновен контейнер на страницата */
+.wrapper {
+  width: 95%;
+  max-width: 1200px;
+  height: 90vh;
+  background-color: rgba(255, 255, 255, 0.15);
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  padding: 2em;
+  border-radius: 1em;
+  box-shadow: 0 4em 5em rgba(27, 8, 53, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  overflow: auto; /* Променено от hidden на auto за по-добра мобилна поддръжка */
+}
+
+/* Подобрен стил на бутона за въртене */
+#spin-btn {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  height: 26%; /* Леко намален размер */
+  width: 26%; /* Леко намален размер */
+  margin: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ff00c8;
+  background: radial-gradient(#ff00c8 50%, #e8ff19 85%);
+  color: #000000;
+  text-transform: uppercase;
+  font-size: calc(1vw + 0.8em); /* Адаптивен размер на шрифта */
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(255, 0, 200, 0.5);
+  padding: 0; /* Премахнати всички падинги */
+  line-height: 1; /* Подобрено центриране на текста */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Подобрена адаптивност */
+@media screen and (max-width: 1024px) {
+  .wrapper {
+    flex-direction: column;
+    height: auto;
+    padding: 1.5em;
+    overflow-y: auto;
+    position: absolute; /* Променено от fixed за по-добра мобилна поддръжка */
+  }
+  
+  .wheel-container, .content-container {
+    width: 100%;
+  }
+  
+  .wheel-container {
+    margin-bottom: 20px;
+    height: auto; /* Автоматична височина вместо фиксирана */
+    max-height: 50vh;
+  }
+  
+  .container {
+    max-height: 45vh;
+  }
+  
+  .content-container {
+    height: auto;
+    max-height: none; /* Премахнато ограничението за височина */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 1em;
+    width: 98%;
+  }
+  
+  #spin-btn {
+    font-size: 1em; /* По-малък размер на шрифта за мобилни устройства */
   }
 }
