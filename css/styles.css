@@ -586,39 +586,7 @@ body {
   .wheel-container, .content-container {
     width: 100%;
   }
-  
-  .wheel-container {
-    height: 50vh;
-    margin-bottom: 20px;
-  }
-  
-  .content-container {
-    height: auto;
-    max-height: 40vh;
-  }
-}
 
-@media screen and (max-width: 768px) {
-  .wrapper {
-    padding: 1em;
-    width: 98%;
-  }
-  
-  #timer-controls {
-    flex-direction: column;
-  }
-  
-  #timer-controls button {
-    width: 100%;
-    margin-bottom: 5px;
-  }
-  
-  #wheel {
-    max-height: 300px;
-  }
-}
-
-/* Добавете/заменете тези стилове във вашия CSS файл */
 
 /* Контейнер за колелото - подобрено позициониране */
 .wheel-container {
@@ -738,4 +706,29 @@ body {
   #spin-btn {
     font-size: 1em; /* По-малък размер на шрифта за мобилни устройства */
   }
-}
+  
+  } 
+  .nav-links {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 15px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #6414e9;
+    border: 2px solid #6414e9;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    background-color: #6414e9;
+    color: #ffffff;
+  }
+
