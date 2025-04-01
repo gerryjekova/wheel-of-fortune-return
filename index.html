@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,34 +15,75 @@
   </head>
   <body>
     <div class="wrapper">
-      <div class="container">
-        <canvas id="wheel"></canvas>
-        <button id="spin-btn">Spin</button>
-      </div>
-      
-      <!-- Заменяме модала с вграден раздел за предизвикателство -->
-      <div id="challenge-section" style="display: none;">
-        <h2 id="challenge-headline"></h2>
-        <div class="challenge-content">
-          <img id="challenge-image" src="assets" alt="Challenge Image">
+      <!-- Лява част - колелото -->
+      <div class="wheel-container">
+        <div class="container">
+          <canvas id="wheel"></canvas>
+          <button id="spin-btn">Spin</button>
+        </div>
+        <div id="final-value">
+          <p>Click On The Spin Button To Start</p>
         </div>
       </div>
       
-      <div id="final-value">
-        <p>Click On The Spin Button To Start</p>
-      </div>
-      
-      <!-- Таймер компонент -->
-      <div id="timer-container" style="display: none;">
-        <h3 id="timer-title">Време:</h3>
-        <div id="timer-display">00:00</div>
-        <div id="timer-controls">
-          <button id="start-timer">Старт</button>
-          <button id="pause-timer">Пауза</button>
-          <button id="reset-timer">Рестарт</button>
+      <!-- Дясна част - предизвикателство, таймер и СИСТЕМА ЗА ГЛАСУВАНЕ -->
+      <div class="content-container">
+        <!-- Заменяме модала с вграден раздел за предизвикателство -->
+        <div id="challenge-section" style="display: none;">
+          <h2 id="challenge-headline"></h2>
+          <div class="challenge-content">
+            <img id="challenge-image" src="" alt="Challenge Image">
+          </div>
         </div>
-        <div id="multi-timer-info" style="display: none;">
-          <span id="timer-count">Таймер: 1/10</span>
+        
+        <!-- Таймер компонент -->
+        <div id="timer-container" style="display: none;">
+          <h3 id="timer-title">Време:</h3>
+          <div id="timer-display">00:00</div>
+          <div id="timer-controls">
+            <button id="start-timer">Старт</button>
+            <button id="pause-timer">Пауза</button>
+            <button id="reset-timer">Рестарт</button>
+          </div>
+          <div id="multi-timer-info" style="display: none;">
+            <span id="timer-count">Таймер: 1/10</span>
+          </div>
+        </div>
+        
+        <!-- Система за гласуване за истина или предизвикателство (ВЪВ/НА СТРАНИЦАТА) -->
+        <div id="vote-container" style="display: none;">
+          <div class="vote-header">
+            <h2 id="vote-title">Истина или Предизвикателство</h2>
+            <div class="vote-tabs">
+              <button id="truth-tab" class="vote-tab active">Истина</button>
+              <button id="dare-tab" class="vote-tab">Предизвикателство</button>
+            </div>
+          </div>
+          
+          <div id="truth-panel" class="vote-panel">
+            <div class="options-container" id="truth-options">
+              <!-- Опциите за истина ще се добавят тук динамично -->
+            </div>
+            <div class="input-container">
+              <input type="text" id="new-truth" placeholder="Добави въпрос за истина...">
+              <button id="add-truth">Добави</button>
+            </div>
+          </div>
+          
+          <div id="dare-panel" class="vote-panel" style="display: none;">
+            <div class="options-container" id="dare-options">
+              <!-- Опциите за предизвикателство ще се добавят тук динамично -->
+            </div>
+            <div class="input-container">
+              <input type="text" id="new-dare" placeholder="Добави предизвикателство...">
+              <button id="add-dare">Добави</button>
+            </div>
+          </div>
+          
+          <div class="vote-footer">
+            <button id="select-winner">Избери победител</button>
+            <button id="reset-vote">Изчисти всички</button>
+          </div>
         </div>
       </div>
     </div>
@@ -54,6 +97,5 @@
     
   </body>
   <elevenlabs-convai agent-id="1JqrBe6CLthcX9isLUAO"></elevenlabs-convai><script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
-ver-5-claude
 </html>
-
+*/

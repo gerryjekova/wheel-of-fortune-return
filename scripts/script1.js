@@ -1,32 +1,36 @@
+// Променете началото на JavaScript файла с този код:
+
 const wheel = document.getElementById("wheel");
 const spinBtn = document.getElementById("spin-btn");
 const finalValue = document.getElementById("final-value");
 
-// Redefine rotation values for a 20-section wheel
+// Предефиниране на стойностите на въртене за колело с 14 секции
 const rotationValues = [];
-for (let i = 0; i < 20; i++) {
+// За 14 секции, всяка секция е с размер 360/14 = 25.7 градуса приблизително
+const sectionSize = 360 / 14;
+for (let i = 0; i < 14; i++) {
   rotationValues.push({
-    minDegree: i * 18,
-    maxDegree: (i + 1) * 18 - 1,
+    minDegree: i * sectionSize,
+    maxDegree: (i + 1) * sectionSize - 1,
     value: i + 1
   });
 }
 
-// Define data for 20 equally sized sections
-const data = new Array(20).fill(1);  // All sections are equally likely
+// Данни за 14 равни секции
+const data = new Array(14).fill(1);  // Всички секции са еднакво вероятни
 
-// Define background colors for each piece
+// Дефиниране на фонови цветове за всяка част
 const pieColors = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 14; i++) {
   pieColors.push(i % 2 === 0 ? "#8b35bc" : "#b163da");
 }
 
-// Create the chart
+// Създаване на диаграмата
 let myChart = new Chart(wheel, {
   plugins: [ChartDataLabels],
   type: "pie",
   data: {
-    labels: Array.from({ length: 20 }, (_, i) => i + 1),
+    labels: Array.from({ length: 14 }, (_, i) => i + 1),
     datasets: [{ backgroundColor: pieColors, data: data }]
   },
   options: {
@@ -275,3 +279,277 @@ function setupTimer(challengeNumber) {
   // Актуализиране на дисплея на таймера
   timerDisplay.textContent = formatTime(totalSeconds);
 }
+
+// JavaScript за системата за гласуване
+// Добави това в края на script1.js
+
+// Актуализирай функцията setupTimer за да добави логика за истина или предизвикателство
+function setupTimer(challengeNumber) {
+  // Скриване на контейнерите за гласуване по подразбиране
+  if (document.getElementById('vote-container')) {
+    document.getElementById('vote-container').style.display = 'none';
+  }
+  
+  // Показване на контейнера на таймера
+  timerContainer.style.display = 'block';
+  
+  // Рестартиране на всички таймер променливи
+  clearInterval(timer);
+  timerRunning = false;
+  multiTimerCount = 0;
+  
+  // Настройка според номера на предизвикателството
+  if (challengeNumber === 2) {
+    // 60-секундни рисунки с теми от чата - 10 мин
+    isMultiTimer = true;
+    totalSeconds = 60; // 1 минута
+    originalSeconds = totalSeconds;
+    timerTitle.textContent = 'Време за рисуване:';
+    multiTimerInfo.style.display = 'block';
+    timerCountDisplay.textContent = `Таймер: 1/10`;
+    maxMultiTimers = 10;
+  } else if (challengeNumber === 4 || challengeNumber === 9) {
+    // Истина или предизвикателство - показване на системата за гласуване
+    if (document.getElementById('vote-container')) {
+      document.getElementById('vote-container').style.display = 'block';
+      timerContainer.style.display = 'none'; // Скриване на таймера
+    }
+  } else if (challengeNumber === 12) {
+    // Мисля рандом рап песни - 5 мин
+    isMultiTimer = false;
+    totalSeconds = 300; // 5 минути
+    originalSeconds = totalSeconds;
+    timerTitle.textContent = 'Време за рап:';
+    multiTimerInfo.style.display = 'none';
+  } else if (challengeNumber === 15) {
+    // Караоке - 3 мин
+    isMultiTimer = false;
+    totalSeconds = 180; // 3 минути
+    originalSeconds = totalSeconds;
+    timerTitle.textContent = 'Време за караоке:';
+    multiTimerInfo.style.display = 'none';
+  } else if (challengeNumber === 17) {
+    // Имитирай случаен акцент - 5 мин
+    isMultiTimer = false;
+    totalSeconds = 300; // 5 минути
+    originalSeconds = totalSeconds;
+    timerTitle.textContent = 'Време за акцент:';
+    multiTimerInfo.style.display = 'none';
+  } else if (challengeNumber === 5 || challengeNumber === 11 || challengeNumber === 13 || challengeNumber === 16 || challengeNumber === 18) {
+    // Предизвикателства без таймер
+    timerContainer.style.display = 'none';
+  } else {
+    // Всички други предизвикателства използват 10-минутен таймер
+    isMultiTimer = false;
+    totalSeconds = 600; // 10 минути
+    originalSeconds = totalSeconds;
+    timerTitle.textContent = 'Време за предизвикателство:';
+    multiTimerInfo.style.display = 'none';
+  }
+  
+  // Актуализиране на дисплея на таймера
+  timerDisplay.textContent = formatTime(totalSeconds);
+}
+
+// Заменете кода за инициализиране на системата за гласуване с този:
+
+// Инициализиране на системата за гласуване при зареждане на страницата
+document.addEventListener('DOMContentLoaded', function() {
+  // Проверка дали HTML елементите за гласуване съществуват
+  if (!document.getElementById('vote-container')) return;
+  
+  const truthTab = document.getElementById('truth-tab');
+  const dareTab = document.getElementById('dare-tab');
+  const truthPanel = document.getElementById('truth-panel');
+  const darePanel = document.getElementById('dare-panel');
+  const addTruthBtn = document.getElementById('add-truth');
+  const addDareBtn = document.getElementById('add-dare');
+  const newTruthInput = document.getElementById('new-truth');
+  const newDareInput = document.getElementById('new-dare');
+  const truthOptions = document.getElementById('truth-options');
+  const dareOptions = document.getElementById('dare-options');
+  const selectWinnerBtn = document.getElementById('select-winner');
+  const resetVoteBtn = document.getElementById('reset-vote');
+  
+  // Масиви за съхранение на опциите
+  let truthsList = [];
+  let daresList = [];
+  
+  // Смяна между таб панелите
+  truthTab.addEventListener('click', function() {
+    truthTab.classList.add('active');
+    dareTab.classList.remove('active');
+    truthPanel.style.display = 'block';
+    darePanel.style.display = 'none';
+  });
+  
+  dareTab.addEventListener('click', function() {
+    dareTab.classList.add('active');
+    truthTab.classList.remove('active');
+    darePanel.style.display = 'block';
+    truthPanel.style.display = 'none';
+  });
+  
+  // Добавяне на нова истина
+  addTruthBtn.addEventListener('click', function() {
+    const text = newTruthInput.value.trim();
+    if (text) {
+      addTruthOption(text);
+      newTruthInput.value = '';
+    }
+  });
+  
+  // Добавяне на ново предизвикателство
+  addDareBtn.addEventListener('click', function() {
+    const text = newDareInput.value.trim();
+    if (text) {
+      addDareOption(text);
+      newDareInput.value = '';
+    }
+  });
+  
+  // Enter клавиш за инпут полетата
+  newTruthInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      addTruthBtn.click();
+    }
+  });
+  
+  newDareInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      addDareBtn.click();
+    }
+  });
+  
+  // Функция за добавяне на опция за истина
+  function addTruthOption(text) {
+    const id = 'truth-' + Date.now();
+    const option = {
+      id: id,
+      text: text,
+      votes: 0
+    };
+    
+    truthsList.push(option);
+    renderTruthOptions();
+  }
+  
+  // Функция за добавяне на опция за предизвикателство
+  function addDareOption(text) {
+    const id = 'dare-' + Date.now();
+    const option = {
+      id: id,
+      text: text,
+      votes: 0
+    };
+    
+    daresList.push(option);
+    renderDareOptions();
+  }
+  
+  // Рендериране на опциите за истина
+  function renderTruthOptions() {
+    truthOptions.innerHTML = '';
+    truthsList.forEach(option => {
+      const optionEl = document.createElement('div');
+      optionEl.className = 'option-item';
+      if (option.winner) {
+        optionEl.classList.add('winner');
+      }
+      
+      optionEl.innerHTML = `
+        <span class="option-text">${option.text}</span>
+        <span class="vote-count">${option.votes}</span>
+        <button class="vote-btn" data-id="${option.id}">+1</button>
+      `;
+      
+      truthOptions.appendChild(optionEl);
+    });
+    
+    // Добавяне на event listeners за бутоните за гласуване
+    truthOptions.querySelectorAll('.vote-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = btn.getAttribute('data-id');
+        const option = truthsList.find(o => o.id === id);
+        if (option) {
+          option.votes++;
+          renderTruthOptions();
+        }
+      });
+    });
+  }
+  
+  // Рендериране на опциите за предизвикателство
+  function renderDareOptions() {
+    dareOptions.innerHTML = '';
+    daresList.forEach(option => {
+      const optionEl = document.createElement('div');
+      optionEl.className = 'option-item';
+      if (option.winner) {
+        optionEl.classList.add('winner');
+      }
+      
+      optionEl.innerHTML = `
+        <span class="option-text">${option.text}</span>
+        <span class="vote-count">${option.votes}</span>
+        <button class="vote-btn" data-id="${option.id}">+1</button>
+      `;
+      
+      dareOptions.appendChild(optionEl);
+    });
+    
+    // Добавяне на event listeners за бутоните за гласуване
+    dareOptions.querySelectorAll('.vote-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = btn.getAttribute('data-id');
+        const option = daresList.find(o => o.id === id);
+        if (option) {
+          option.votes++;
+          renderDareOptions();
+        }
+      });
+    });
+  }
+  
+  // Избор на победител
+  selectWinnerBtn.addEventListener('click', function() {
+    if (truthPanel.style.display !== 'none') {
+      // Избор на победител от истините
+      if (truthsList.length > 0) {
+        truthsList.forEach(option => option.winner = false);
+        const winner = truthsList.reduce((prev, current) => 
+          (prev.votes > current.votes) ? prev : current
+        );
+        winner.winner = true;
+        renderTruthOptions();
+      }
+    } else {
+      // Избор на победител от предизвикателствата
+      if (daresList.length > 0) {
+        daresList.forEach(option => option.winner = false);
+        const winner = daresList.reduce((prev, current) => 
+          (prev.votes > current.votes) ? prev : current
+        );
+        winner.winner = true;
+        renderDareOptions();
+      }
+    }
+  });
+  
+  // Изчистване на всички опции
+  resetVoteBtn.addEventListener('click', function() {
+    truthsList = [];
+    daresList = [];
+    renderTruthOptions();
+    renderDareOptions();
+  });
+  
+  // Добавяне на примерни опции
+  addTruthOption('Кое е най-неловкото нещо, което ти се е случвало на живо?');
+  addTruthOption('Имаш ли тайни, които не си споделял/а с никого?');
+  addTruthOption('Какво е най-лошото нещо, което си правил/а когато никой не те вижда?');
+  
+  addDareOption('Имитирай известна личност за 1 минута');
+  addDareOption('Изпей припева на песента, която в момента е #1 в класациите');
+  addDareOption('Танцувай с швейцарска пръчка за 30 секунди');
+});
