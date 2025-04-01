@@ -2,23 +2,22 @@ const wheel = document.getElementById("wheel");
 const spinBtn = document.getElementById("spin-btn");
 const finalValue = document.getElementById("final-value");
 
+// Redefine rotation values for a 20-section wheel
 const rotationValues = [];
-const sectionSize = 360 / 14;  // Adjusted to use 25.71 degrees per section (360 / 14)
-
-for (let i = 0; i < 14; i++) {
+for (let i = 0; i < 20; i++) {
   rotationValues.push({
-    minDegree: i * sectionSize,
-    maxDegree: (i + 1) * sectionSize - 1,
+    minDegree: i * 18,
+    maxDegree: (i + 1) * 18 - 1,
     value: i + 1
   });
 }
 
-// Define data for 14 equally sized sections
-const data = new Array(14).fill(1);  // All sections are equally likely
+// Define data for 20 equally sized sections
+const data = new Array(20).fill(1);  // All sections are equally likely
 
 // Define background colors for each piece
 const pieColors = [];
-for (let i = 0; i < 14; i++) {
+for (let i = 0; i < 20; i++) {
   pieColors.push(i % 2 === 0 ? "#8b35bc" : "#b163da");
 }
 
@@ -27,7 +26,7 @@ let myChart = new Chart(wheel, {
   plugins: [ChartDataLabels],
   type: "pie",
   data: {
-    labels: Array.from({ length: 14 }, (_, i) => i + 1),
+    labels: Array.from({ length: 20 }, (_, i) => i + 1),
     datasets: [{ backgroundColor: pieColors, data: data }]
   },
   options: {
@@ -60,51 +59,55 @@ async function fetchChallenges() {
 // Call fetchChallenges on page load
 document.addEventListener("DOMContentLoaded", fetchChallenges);
 
-// Update showModal to use fetched data
-const showModal = (value) => {
-  const modal = document.getElementById("myModal");
-  const headline = document.getElementById("modal-headline");
-  const image = document.getElementById("modal-image");
+// Функция за показване на предизвикателството в секцията вместо в модален прозорец
+const showChallenge = (value) => {
+  const challengeSection = document.getElementById("challenge-section");
+  const headline = document.getElementById("challenge-headline");
+  const image = document.getElementById("challenge-image");
 
-  // Find the challenge by its number
+  // Намиране на предизвикателството по номера му
   const challenge = challengeData.find(challenge => challenge.number === value);
 
   if (challenge) {
-    headline.innerText = challenge.challenge; // Set the headline text
-    image.src = `${challenge.image}`;  // Set the correct image path
-    image.alt = challenge.challenge;         // Optional: set alt text
+    headline.innerText = challenge.challenge;
+    image.src = `${challenge.image}`;
+    image.alt = challenge.challenge;
+    
+    // Показване на секцията с предизвикателството
+    challengeSection.style.display = "block";
+    
+    // Настройка на таймера според предизвикателството
+    setupTimer(value);
   } else {
-    headline.innerText = "Challenge not found";
-    image.src = ""; // Clear the image if challenge not found
+    headline.innerText = "Предизвикателството не е намерено";
+    image.src = "";
     image.alt = "";
+    
+    // Скриване на таймера, ако няма предизвикателство
+    timerContainer.style.display = 'none';
   }
-
-  // Display the modal
-  modal.style.display = "block";
-
-  // Close modal on click
-  const closeBtn = document.getElementsByClassName("close")[0];
-  closeBtn.onclick = function () {
-    modal.style.display = "none";
-  };
-  window.onclick = function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  };
 };
 
+// Актуализирана функция valueGenerator
+const valueGenerator = (angleValue) => {
+  for (let i of rotationValues) {
+    if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
+      finalValue.innerHTML = `<p>Стойност: ${i.value}</p>`;
+      showChallenge(i.value);
+      spinBtn.disabled = false;
+      break;
+    }
+  }
+};
 
+fetch('data/challenges.json')
+  .then(response => response.json())
+  .then(data => console.log(data));
 
-
-  fetch('data/challenges.json')
-          .then(response => response.json())
-          .then(data => console.log(data));
-
-          fetch('data/challenges.json')
+fetch('data/challenges.json')
   .then(response => {
     if (!response.ok) {
-        throw new Error('Network response was not ok');
+      throw new Error('Network response was not ok');
     }
     return response.json();
   })
@@ -113,54 +116,162 @@ const showModal = (value) => {
     // additional logic to use the data
   })
   .catch(error => console.error('Error fetching challenges:', error));
-
-  
-  // Update valueGenerator function to call showModal
-  const valueGenerator = (angleValue) => {
-    for (let i of rotationValues) {
-      if (angleValue >= i.minDegree && angleValue <= i.maxDegree) {
-        finalValue.innerHTML = `<p>Value: ${i.value}</p>`;
-        showModal(i.value);
-        spinBtn.disabled = false;
-        break;
-      }
-    }
-  };
-  
   
 // Spin logic
 let count = 0;
 let resultValue = 101;
-
 spinBtn.addEventListener("click", () => {
   spinBtn.disabled = true;
   finalValue.innerHTML = `<p>Good Luck!</p>`;
-
-  let randomIndex = Math.floor(Math.random() * 14); // Random section
-  let randomDegree = rotationValues[randomIndex].minDegree + 9; // Center of the section
-  let arrowOffset = 90; // Align middle-right with the arrow
-  let finalRotation = 360 * 5 + (arrowOffset - randomDegree); // 5 full rotations + alignment
-
-  // Apply rotation using CSS keyframes
-  wheel.style.setProperty("--final-rotation", `${finalRotation}deg`);
-  wheel.style.animation = "rotate 4s ease-out";
-
-  // After animation ends, display the result value and freeze the wheel
-  setTimeout(() => {
-    // Display the result value
-    const resultValue = randomIndex + 1; // Result index +1 (1-based numbering)
-    finalValue.innerHTML = `<p>Value: ${resultValue}</p>`;
-
-    // Freeze the wheel by setting the final rotation directly
-    wheel.style.animation = ""; // Stop the animation
-    wheel.style.transform = `rotate(${finalRotation % 360}deg)`; // Apply the final rotation directly
-
-    // Wait 2 seconds before showing the modal
-    setTimeout(() => {
-      showModal(resultValue); // Show the modal
-      spinBtn.disabled = false;
-    }, 1400); // 2-second delay for the modal
-  }, 4000); // Match the animation duration
+  let randomDegree = Math.floor(Math.random() * 360);
+  let rotationInterval = setInterval(() => {
+    myChart.options.rotation += resultValue;
+    myChart.update();
+    if (myChart.options.rotation >= 360) {
+      count += 1;
+      resultValue -= 5;
+      myChart.options.rotation = 0;
+    } else if (count > 15 && myChart.options.rotation === randomDegree) {
+      valueGenerator(randomDegree);
+      clearInterval(rotationInterval);
+      count = 0;
+      resultValue = 101;
+    }
+  }, 10);
 });
 
+// Звукови файлове
+const tickSound = new Audio('sounds/tick.mp3');
+const finishSound = new Audio('sounds/finish.mp3');
+const shortFinishSound = new Audio('sounds/short-finish.mp3');
 
+// Променливи за таймера
+let timer;
+let timerRunning = false;
+let totalSeconds = 0;
+let originalSeconds = 0;
+let isMultiTimer = false;
+let multiTimerCount = 0;
+let maxMultiTimers = 10;
+
+// Извличане на елементите за таймера
+const timerContainer = document.getElementById('timer-container');
+const timerDisplay = document.getElementById('timer-display');
+const timerTitle = document.getElementById('timer-title');
+const startTimerBtn = document.getElementById('start-timer');
+const pauseTimerBtn = document.getElementById('pause-timer');
+const resetTimerBtn = document.getElementById('reset-timer');
+const multiTimerInfo = document.getElementById('multi-timer-info');
+const timerCountDisplay = document.getElementById('timer-count');
+
+// Функция за конвертиране на секунди в mm:ss формат
+function formatTime(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Функция за старт на таймера
+function startTimer() {
+  if (!timerRunning) {
+    timerRunning = true;
+    timer = setInterval(() => {
+      if (totalSeconds > 0) {
+        totalSeconds--;
+        timerDisplay.textContent = formatTime(totalSeconds);
+        
+        // Пускане на тиктакащ звук на всеки 5 секунди
+        if (totalSeconds % 5 === 0 && totalSeconds > 0) {
+          tickSound.play();
+        }
+        
+        // Когато таймерът достигне 0
+        if (totalSeconds === 0) {
+          clearInterval(timer);
+          timerRunning = false;
+          
+          if (isMultiTimer && multiTimerCount < maxMultiTimers) {
+            // Пускане на краткия звуков сигнал за 1-минутния таймер
+            shortFinishSound.play();
+            
+            // Увеличаване на брояча и актуализиране на дисплея
+            multiTimerCount++;
+            timerCountDisplay.textContent = `Таймер: ${multiTimerCount + 1}/${maxMultiTimers}`;
+            
+            // Ако все още не сме достигнали максимума, стартирайте следващия таймер
+            if (multiTimerCount < maxMultiTimers) {
+              totalSeconds = 60; // 1 минута за всеки от 10-те таймера за рисуване
+              startTimer();
+            } else {
+              // Достигнахме максималния брой таймери
+              finishSound.play();
+              multiTimerInfo.style.display = 'none';
+              timerTitle.textContent = 'Всички таймери завършени!';
+            }
+          } else {
+            // Пускане на финалния звуков сигнал за обикновения таймер
+            finishSound.play();
+            timerTitle.textContent = 'Времето изтече!';
+          }
+        }
+      }
+    }, 1000);
+  }
+}
+
+// Функция за пауза на таймера
+function pauseTimer() {
+  clearInterval(timer);
+  timerRunning = false;
+}
+
+// Функция за рестартиране на таймера
+function resetTimer() {
+  clearInterval(timer);
+  timerRunning = false;
+  totalSeconds = originalSeconds;
+  timerDisplay.textContent = formatTime(totalSeconds);
+  timerTitle.textContent = 'Време:';
+  
+  if (isMultiTimer) {
+    multiTimerCount = 0;
+    timerCountDisplay.textContent = `Таймер: 1/${maxMultiTimers}`;
+  }
+}
+
+// Добавяне на слушатели за събитията за бутоните на таймера
+startTimerBtn.addEventListener('click', startTimer);
+pauseTimerBtn.addEventListener('click', pauseTimer);
+resetTimerBtn.addEventListener('click', resetTimer);
+
+// Функция за настройка на таймера според предизвикателството
+function setupTimer(challengeNumber) {
+  // Показване на контейнера на таймера
+  timerContainer.style.display = 'block';
+  
+  // Рестартиране на всички таймер променливи
+  clearInterval(timer);
+  timerRunning = false;
+  multiTimerCount = 0;
+  
+  // Настройка според номера на предизвикателството
+  // Предизвикателство #3 е "Бързи Рисунки с Теми от Чата" с 10 таймера по 1 минута
+  if (challengeNumber === 3) {
+    isMultiTimer = true;
+    totalSeconds = 60; // 1 минута
+    originalSeconds = totalSeconds;
+    timerTitle.textContent = 'Време за рисуване:';
+    multiTimerInfo.style.display = 'block';
+    timerCountDisplay.textContent = `Таймер: 1/${maxMultiTimers}`;
+  } else {
+    // Всички други предизвикателства използват 10-минутен таймер
+    isMultiTimer = false;
+    totalSeconds = 600; // 10 минути
+    originalSeconds = totalSeconds;
+    timerTitle.textContent = 'Време за предизвикателство:';
+    multiTimerInfo.style.display = 'none';
+  }
+  
+  // Актуализиране на дисплея на таймера
+  timerDisplay.textContent = formatTime(totalSeconds);
+}
