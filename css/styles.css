@@ -740,3 +740,397 @@ body {
     font-size: 1em; /* По-малък размер на шрифта за мобилни устройства */
   }
 }
+
+/* Добави този код към styles.css */
+
+/* Стриймър асети и интерактивни елементи */
+.streamer-overlay {
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 50;
+}
+
+/* Общ стил за контейнери */
+.social-cta, .clips-container, .chat-interactions, .notification-banner {
+  background: rgba(100, 20, 233, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(139, 53, 188, 0.5);
+  border-radius: 10px;
+  padding: 15px;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.social-cta:hover, .clips-container:hover, .chat-interactions:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: rgba(139, 53, 188, 0.8);
+}
+
+/* Заглавия */
+.streamer-overlay h3 {
+  text-align: center;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #fff;
+  text-shadow: 0 0 5px #8b35bc;
+}
+
+/* Социални бутони */
+.social-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(50% - 5px);
+  padding: 8px;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.social-button:hover {
+  transform: scale(1.05);
+}
+
+.twitch {
+  background-color: #9146FF;
+}
+
+.youtube {
+  background-color: #FF0000;
+}
+
+.twitter {
+  background-color: #1DA1F2;
+}
+
+.instagram {
+  background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+}
+
+/* Бутон за абонамент */
+.subscription-box {
+  text-align: center;
+}
+
+.glow-button {
+  background: linear-gradient(45deg, #ff00c8, #3b80ff);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 0, 200, 0.5);
+  transition: all 0.3s ease;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(255, 0, 200, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(255, 0, 200, 0.8), 0 0 30px rgba(59, 128, 255, 0.6);
+  }
+}
+
+.glow-button:hover {
+  transform: scale(1.05);
+}
+
+.subscriber-count {
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Клипове */
+.clips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.clip {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.clip:hover {
+  transform: scale(1.03);
+}
+
+.clip-thumbnail {
+  position: relative;
+  height: 80px;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.clip:hover .play-button {
+  opacity: 1;
+}
+
+.clip-duration {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.7em;
+}
+
+.clip-title {
+  margin-top: 5px;
+  font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Гласуване */
+.poll-container {
+  margin-top: 10px;
+}
+
+.poll-question {
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.poll-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.poll-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.option-text {
+  width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.option-bar {
+  flex-grow: 1;
+  height: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.option-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #8b35bc, #b163da);
+}
+
+.option-percentage {
+  width: 40px;
+  text-align: right;
+  font-size: 0.9em;
+}
+
+#vote-btn {
+  margin: 10px auto 0;
+  display: block;
+  width: 100%;
+}
+
+/* Банер за уведомления */
+.notification-banner {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  animation: slide-in 0.5s, pulse 2s infinite;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    background: rgba(100, 20, 233, 0.2);
+  }
+  50% {
+    background: rgba(139, 53, 188, 0.3);
+  }
+  100% {
+    background: rgba(100, 20, 233, 0.2);
+  }
+}
+
+.notification-text {
+  white-space: nowrap;
+  overflow: hidden;
+  animation: scrolling-text 15s linear infinite;
+}
+
+@keyframes scrolling-text {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Видео модал */
+.video-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-container {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  background: black;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.close-video {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+#video-player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* Стрелка към ElevenLabs бот */
+.elevenlabs-pointer {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 100;
+}
+
+.arrow-container {
+  position: relative;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.arrow {
+  width: 30px;
+  height: 30px;
+  background-color: #ff00c8;
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+  transform: rotate(225deg);
+  box-shadow: 0 0 10px rgba(255, 0, 200, 0.8);
+}
+
+.arrow-text {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 150px;
+  padding: 8px;
+  background: rgba(100, 20, 233, 0.8);
+  color: white;
+  font-size: 0.9em;
+  text-align: center;
+  border-radius: 5px;
+  transform: translateX(-50%);
+}
+
+.arrow-text:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid rgba(100, 20, 233, 0.8);
+}
+
+/* Медия запити за мобилни устройства */
+@media screen and (max-width: 768px) {
+  .streamer-overlay {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 20px;
+  }
+}

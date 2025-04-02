@@ -510,6 +510,52 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
+
+  // Добави този код към script1.js или combined-wheel.js
+
+// Звукови ефекти
+const popSound = new Audio('sounds/pop.mp3');
+const clickSound = new Audio('sounds/click.mp3');
+
+// Функция за възпроизвеждане на звук при кликване на бутон
+function playButtonSound(sound) {
+  // Спиране на звука ако вече се възпроизвежда
+  sound.pause();
+  sound.currentTime = 0;
+  // Възпроизвеждане на звука
+  sound.play().catch(error => {
+    console.error('Грешка при възпроизвеждане на звука:', error);
+  });
+}
+
+// Добавяне на звуков ефект към бутона за въртене
+spinBtn.addEventListener('click', function() {
+  playButtonSound(popSound);
+  // Останалият код за въртене остава непроменен
+});
+
+// Добавяне на звуков ефект към бутоните на таймера
+document.addEventListener('DOMContentLoaded', function() {
+  // Бутони на таймера
+  if (startTimerBtn) startTimerBtn.addEventListener('click', () => playButtonSound(clickSound));
+  if (pauseTimerBtn) pauseTimerBtn.addEventListener('click', () => playButtonSound(clickSound));
+  if (resetTimerBtn) resetTimerBtn.addEventListener('click', () => playButtonSound(clickSound));
+  
+  // Бутони за гласуване
+  const voteButtons = document.querySelectorAll('.vote-btn, #add-truth, #add-dare, #select-winner, #reset-vote, #truth-tab, #dare-tab');
+  voteButtons.forEach(button => {
+    button.addEventListener('click', () => playButtonSound(clickSound));
+  });
+  
+  // Добавяне на звук към динамично създадени бутони
+  document.body.addEventListener('click', function(event) {
+    // Проверка дали кликнатият елемент е бутон
+    if (event.target.tagName === 'BUTTON' && !event.target.classList.contains('sound-added')) {
+      playButtonSound(clickSound);
+      event.target.classList.add('sound-added');
+    }
+  });
+});
   
   // Избор на победител
   selectWinnerBtn.addEventListener('click', function() {
@@ -552,4 +598,493 @@ document.addEventListener('DOMContentLoaded', function() {
   addDareOption('Имитирай известна личност за 1 минута');
   addDareOption('Изпей припева на песента, която в момента е #1 в класациите');
   addDareOption('Танцувай с швейцарска пръчка за 30 секунди');
+});
+
+// Добави този код към script1.js или combined-wheel.js
+
+// Интерактивни елементи
+document.addEventListener('DOMContentLoaded', function() {
+  // Звуци
+  const popSound = new Audio('sounds/pop.mp3');
+  const notificationSound = new Audio('sounds/notification.mp3');
+  const subscribeSound = new Audio('sounds/subscribe.mp3');
+  
+  // Функция за възпроизвеждане на звуци
+  function playSound(sound) {
+    sound.pause();
+    sound.currentTime = 0;
+    sound.play().catch(error => console.error('Error playing sound:', error));
+  }
+  
+  // 1. Клипове - видео плейър
+  const clips = document.querySelectorAll('.clip');
+  const videoModal = document.getElementById('video-modal');
+  const videoPlayer = document.getElementById('video-player');
+  const closeVideo = document.querySelector('.close-video');
+  
+  if (clips && videoModal && videoPlayer) {
+    clips.forEach(clip => {
+      clip.addEventListener('click', function() {
+        const videoId = this.getAttribute('data-video');
+        videoPlayer.innerHTML = `
+          <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen></iframe>
+        `;
+        videoModal.style.display = 'flex';
+        playSound(popSound);
+      });
+    });
+    
+    if (closeVideo) {
+      closeVideo.addEventListener('click', function() {
+        videoModal.style.display = 'none';
+        videoPlayer.innerHTML = '';
+        playSound(popSound);
+      });
+    }
+    
+    // Закриване на модала при клик извън съдържанието
+    videoModal.addEventListener('click', function(event) {
+      if (event.target === videoModal) {
+        videoModal.style.display = 'none';
+        videoPlayer.innerHTML = '';
+        playSound(popSound);
+      }
+    });
+  }
+  
+  // 2. Абонамент и гласуване
+  const subscribeBtn = document.getElementById('subscribe-btn');
+  const voteBtn = document.getElementById('vote-btn');
+  const subCount = document.getElementById('sub-count');
+  const pollOptions = document.querySelectorAll('.poll-option');
+  
+  if (subscribeBtn && subCount) {
+    let subscribers = 1337;
+    
+    subscribeBtn.addEventListener('click', function() {
+      subscribers++;
+      subCount.textContent = subscribers.toLocaleString();
+      showNotification('Благодаря за абонамента! <span style="color:#ff00c8">♥</span>');
+      playSound(subscribeSound);
+      
+      // Анимация на бутона
+      this.classList.add('subscribed');
+      setTimeout(() => {
+        this.classList.remove('subscribed');
+      }, 1000);
+    });
+  }
+  
+  if (voteBtn && pollOptions) {
+    voteBtn.addEventListener('click', function() {
+      // Избор на случайна опция
+      const randomOption = Math.floor(Math.random() * pollOptions.length);
+      
+      // Обновяване на проценти
+      const newPercentages = generateRandomPercentages(pollOptions.length);
+      
+      pollOptions.forEach((option, index) => {
+        const progressBar = option.querySelector('.option-progress');
+        const percentage = option.querySelector('.option-percentage');
+        
+        // Анимирана промяна на лентата за напредък
+        progressBar.style.transition = 'width 1s ease-in-out';
+        progressBar.style.width = `${newPercentages[index]}%`;
+        percentage.textContent = `${newPercentages[index]}%`;
+      });
+      
+      showNotification('Благодаря за гласуването!');
+      playSound(popSound);
+    });
+  }
+  
+  // 3. Стрелка към ElevenLabs бот
+  const elevenLabsWidget = document.querySelector('elevenlabs-convai');
+  const arrowContainer = document.querySelector('.arrow-container');
+  
+  if (elevenLabsWidget && arrowContainer) {
+    // Позициониране на стрелката към бота
+    function positionArrow() {
+      const botElement = document.querySelector('.convaiButton');
+      if (botElement) {
+        const botRect = botElement.getBoundingClientRect();
+        arrowContainer.style.position = 'absolute';
+        arrowContainer.style.bottom = '80px';
+        arrowContainer.style.right = '20px';
+      }
+    }
+    
+    // Проверка за ботa на всеки 500ms докато не се зареди
+    const arrowInterval = setInterval(() => {
+      const botElement = document.querySelector('.convaiButton');
+      if (botElement) {
+        clearInterval(arrowInterval);
+        positionArrow();
+        
+        // Изчезване на стрелката след клик върху бота
+        botElement.addEventListener('click', function() {
+          arrowContainer.style.display = 'none';
+        });
+      }
+    }, 500);
+    
+    // Актуализиране на позицията при промяна на размера на прозореца
+    window.addEventListener('resize', positionArrow);
+  }
+  
+  // 4. Система за уведомления
+  function showNotification(message) {
+    const notificationElement = document.getElementById('notification-message');
+    if (notificationElement) {
+      notificationElement.innerHTML = message;
+      notificationSound.play().catch(error => console.error('Error playing notification sound:', error));
+      
+      // Визуален ефект на банера
+      const banner = document.querySelector('.notification-banner');
+      if (banner) {
+        banner.classList.add('highlight');
+        setTimeout(() => {
+          banner.classList.remove('highlight');
+        }, 2000);
+      }
+    }
+  }
+  
+  // 5. Промени в съобщенията на банера на всеки 15 секунди
+  const notificationMessages = [
+    'Абонирай се за да получиш достъп до ексклузивни емотикони!',
+    'Ново видео всеки вторник и четвъртък!',
+    'Последвай ме в социалните мрежи за новини и ъпдейти!',
+    'Пиши в чата за да участваш в следващото предизвикателство!',
+    'Не забравяй да натиснеш звънчето за известия!'
+  ];
+  
+  let messageIndex = 0;
+  setInterval(() => {
+    const notificationElement = document.getElementById('notification-message');
+    if (notificationElement) {
+      messageIndex = (messageIndex + 1) % notificationMessages.length;
+      notificationElement.textContent = notificationMessages[messageIndex];
+    }
+  }, 15000);
+  
+  // Помощни функции
+  function generateRandomPercentages(count) {
+    // Генериране на случайни числа, сумата на които е 100
+    let percentages = [];
+    let remaining = 100;
+    
+    for (let i = 0; i < count - 1; i++) {
+      const max = remaining - (count - i - 1);
+      const value = i === 0 ? Math.floor(Math.random() * (max - 10)) + 10 : Math.floor(Math.random() * max);
+      percentages.push(value);
+      remaining -= value;
+    }
+    
+    percentages.push(remaining);
+    return percentages;
+  }
+});
+
+// Добавяне на CSS за подсветка на уведомленията
+document.addEventListener('DOMContentLoaded', function() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .notification-banner.highlight {
+      background: rgba(255, 0, 200, 0.4) !important;
+      transform: scale(1.05);
+      transition: all 0.3s ease;
+    }
+    
+    .subscribed {
+      transform: scale(1.1) !important;
+      background: linear-gradient(45deg, #00ff00, #3b80ff) !important;
+    }
+  `;
+  document.head.appendChild(style);
+});
+
+// Този код добавя допълнителна интеграция с ElevenLabs бота
+// Добави го в края на script1.js или combined-wheel.js
+
+// ElevenLabs бот интеграция
+document.addEventListener('DOMContentLoaded', function() {
+  // Проверка за наличие на ElevenLabs бот
+  const checkForBot = setInterval(() => {
+    const botElement = document.querySelector('elevenlabs-convai');
+    const convaiButton = document.querySelector('.convaiButton');
+    
+    if (botElement && convaiButton) {
+      clearInterval(checkForBot);
+      setupBotIntegration(botElement, convaiButton);
+    }
+  }, 500);
+
+  function setupBotIntegration(botElement, convaiButton) {
+    // 1. Добавяне на забавни реплики, които ботът може да каже
+    const funnyPhrases = [
+      "Здрасти! Нуждаеш се от помощ или просто искаш да си говорим?",
+      "Кажи нещо интересно! Скучно ми е!",
+      "Знаеш ли, че мога да имитирам гласове? Опитай ме!",
+      "Попитай ме нещо забавно!",
+      "Хей, аз съм тук за да те забавлявам между предизвикателствата!",
+      "Харесваш ли ми гласа? Мога да говоря и с други!"
+    ];
+
+    // 2. Стилизиране на бота с забавен вид
+    const style = document.createElement('style');
+    style.textContent = `
+      .convaiButton {
+        animation: pulse-border 2s infinite !important;
+        transition: all 0.3s ease !important;
+      }
+      
+      .convaiButton:hover {
+        transform: scale(1.1) !important;
+      }
+      
+      @keyframes pulse-border {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255, 0, 200, 0.7) !important;
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(255, 0, 200, 0) !important;
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 0, 200, 0) !important;
+        }
+      }
+      
+      .convaiButton::after {
+        content: '🎙️ Говори с мен!';
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 0, 200, 0.8);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      
+      .convaiButton:hover::after {
+        opacity: 1;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // 3. Интеграция с колелото - когато колелото спира, ботът може да каже нещо забавно
+    function getRandomPhrase() {
+      return funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)];
+    }
+
+    // 4. Подготовка за интеграция с API на ElevenLabs (ако има такъв)
+    // Това е примерен код, който трябва да се адаптира според документацията им
+    function triggerBotMessage(message) {
+      // Проверка дали съществува метод за програмно изпращане на съобщения
+      // Ако няма такъв метод, може да се използва визуално подсещане
+      const botContainer = document.querySelector('.convaiButton');
+      
+      if (botContainer) {
+        // Визуално подсещане
+        const notification = document.createElement('div');
+        notification.className = 'bot-notification';
+        notification.textContent = message;
+        notification.style.cssText = `
+          position: absolute;
+          top: -60px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(255, 0, 200, 0.8);
+          color: white;
+          padding: 8px 15px;
+          border-radius: 5px;
+          font-size: 14px;
+          white-space: nowrap;
+          z-index: 1000;
+          animation: fade-in-out 4s forwards;
+        `;
+        
+        const keyframes = `
+          @keyframes fade-in-out {
+            0% { opacity: 0; top: -40px; }
+            10% { opacity: 1; top: -60px; }
+            80% { opacity: 1; top: -60px; }
+            100% { opacity: 0; top: -40px; }
+          }
+        `;
+        
+        const styleElement = document.createElement('style');
+        styleElement.textContent = keyframes;
+        document.head.appendChild(styleElement);
+        
+        botContainer.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.remove();
+          styleElement.remove();
+        }, 4000);
+      }
+    }
+
+    // 5. Слушател за събития от колелото
+    const spinBtn = document.getElementById('spin-btn');
+    if (spinBtn) {
+      let wheelStopListener = null;
+      
+      spinBtn.addEventListener('click', function() {
+        // Изчистване на предишния слушател, ако има такъв
+        if (wheelStopListener) {
+          document.removeEventListener('wheelStop', wheelStopListener);
+        }
+        
+        // Създаване на нов слушател
+        wheelStopListener = function() {
+          // Малко забавяне, за да може първо да се покаже предизвикателството
+          setTimeout(() => {
+            triggerBotMessage(getRandomPhrase());
+          }, 2000);
+        };
+        
+        // Добавяне на нов слушател за събитието "wheelStop"
+        document.addEventListener('wheelStop', wheelStopListener, { once: true });
+      });
+      
+      // Промяна на valueGenerator функцията за да включва събитие при спиране
+      const originalValueGenerator = window.valueGenerator;
+      window.valueGenerator = function(angleValue) {
+        // Извикване на оригиналната функция
+        if (originalValueGenerator) {
+          originalValueGenerator(angleValue);
+        }
+        
+        // Генериране на събитие за спиране на колелото
+        const wheelStopEvent = new CustomEvent('wheelStop');
+        document.dispatchEvent(wheelStopEvent);
+      };
+    }
+    
+    // 6. Интеграция с гласуването
+    const voteBtn = document.getElementById('vote-btn');
+    if (voteBtn) {
+      voteBtn.addEventListener('click', function() {
+        setTimeout(() => {
+          triggerBotMessage("Благодаря за гласуването! Мнението ти е важно!");
+        }, 500);
+      });
+    }
+    
+    // 7. Интеграция с абонамента
+    const subscribeBtn = document.getElementById('subscribe-btn');
+    if (subscribeBtn) {
+      subscribeBtn.addEventListener('click', function() {
+        setTimeout(() => {
+          triggerBotMessage("Уау! Благодаря за абонамента! Ти си най-добрият!");
+        }, 500);
+      });
+    }
+  }
+});
+
+// ЕТО ТОЗИ КОД ПРАВИ БУКВАЛНО ВСИЧКИ БУТОНИ В СТРАНИЦАТА ДА ИЗДАВАТ ЗВУК
+// КОПИРАЙ ГО В НАЧАЛОТО НА ТВОЯ SCRIPT1.JS ИЛИ COMBINED-WHEEL.JS ФАЙЛ
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Зареждане на звуците
+  const popSound = new Audio('sounds/pop.mp3');
+  const clickSound = new Audio('sounds/click.mp3');
+  
+  // Функция за възпроизвеждане на звук
+  function playButtonSound(sound) {
+    // Спиране на звука ако вече се възпроизвежда
+    sound.pause();
+    sound.currentTime = 0;
+    // Възпроизвеждане на звука
+    sound.play().catch(error => {
+      console.error('Грешка при възпроизвеждане на звука:', error);
+    });
+  }
+  
+  // БУКВАЛНО СЛАГАМ ЗВУК НА ВСЕКИ БУТОН В HTML ДОКУМЕНТА
+  function addSoundsToAllButtons() {
+    // Вземи ВСИЧКИ бутони на страницата
+    const allButtons = document.querySelectorAll('button');
+    
+    // Добави звуци към ВСЕКИ ЕДИН бутон
+    allButtons.forEach(button => {
+      // Провери дали бутонът вече има звуков ефект
+      if (!button.classList.contains('sound-added')) {
+        // Добави звук на бутона за въртене
+        if (button.id === 'spin-btn') {
+          button.addEventListener('click', function() {
+            playButtonSound(popSound);
+          });
+        } 
+        // Добави звук на всички други бутони
+        else {
+          button.addEventListener('click', function() {
+            playButtonSound(clickSound);
+          });
+        }
+        
+        // Маркирай бутона, че вече има звук
+        button.classList.add('sound-added');
+      }
+    });
+    
+    console.log('Звуци добавени към ВСИЧКИ бутони!');
+  }
+  
+  // Изпълни функцията веднага
+  addSoundsToAllButtons();
+  
+  // Добави слушател за динамично добавени бутони (например от гласуването)
+  // Това ще хване ВСЕКИ нов бутон, който се добавя след зареждане на страницата
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.addedNodes.length) {
+        mutation.addedNodes.forEach(function(node) {
+          // Проверка за нови бутони
+          if (node.nodeType === 1) {
+            if (node.tagName === 'BUTTON' && !node.classList.contains('sound-added')) {
+              // Добави звук към новия бутон
+              node.addEventListener('click', function() {
+                playButtonSound(clickSound);
+              });
+              node.classList.add('sound-added');
+            }
+            
+            // Проверка за бутони вътре в добавения възел
+            const buttonsInNode = node.querySelectorAll('button:not(.sound-added)');
+            if (buttonsInNode.length) {
+              buttonsInNode.forEach(button => {
+                button.addEventListener('click', function() {
+                  playButtonSound(clickSound);
+                });
+                button.classList.add('sound-added');
+              });
+            }
+          }
+        });
+      }
+    });
+  });
+  
+  // Наблюдавай целия документ за промени
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+  
+  // Добави звуци отново след 1 секунда, за да хване всички закъснели бутони
+  setTimeout(addSoundsToAllButtons, 1000);
+  // И отново след 3 секунди
+  setTimeout(addSoundsToAllButtons, 3000);
 });

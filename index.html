@@ -16,6 +16,7 @@
   <body>
     <div class="wrapper">
       <!-- Лява част - колелото -->
+      
       <div class="wheel-container">
         <div class="container">
           <canvas id="wheel"></canvas>
@@ -32,7 +33,7 @@
         <div id="challenge-section" style="display: none;">
           <h2 id="challenge-headline"></h2>
           <div class="challenge-content">
-            <img id="challenge-image" src="" alt="Challenge Image">
+            <img id="challenge-image" src="assets" alt="Challenge Image">
           </div>
         </div>
         
@@ -79,6 +80,8 @@
               <button id="add-dare">Добави</button>
             </div>
           </div>
+
+          
           
           <div class="vote-footer">
             <button id="select-winner">Избери победител</button>
@@ -94,8 +97,126 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.1.0/chartjs-plugin-datalabels.min.js"></script>
     <!-- Script -->
     <script src="scripts/script1.js"></script>
-    
+    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+
   </body>
-  <elevenlabs-convai agent-id="1JqrBe6CLthcX9isLUAO"></elevenlabs-convai><script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+
+
+<!-- Добави този код в index.html точно преди затварящия </body -->
+
+<!-- Стриймър асети и интерактивни елементи -->
+<div class="streamer-overlay">
+  <!-- Стрелка към ElevenLabs бот -->
+  <div class="elevenlabs-pointer">
+    <div class="arrow-container">
+      <div class="arrow"></div>
+      <div class="arrow-text">Кликни тук за да говориш с мен!</div>
+      <elevenlabs-convai agent-id="1JqrBe6CLthcX9isLUAO"></elevenlabs-convai><script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+    </div>
+  </div>
+
+  <!-- Социални медии и призиви за действие -->
+  <div class="social-cta">
+    <h3>Последвай ме!</h3>
+    <div class="social-buttons">
+      <a href="https://www.twitch.tv/casualnerdingtv" class="social-button twitch" target="_blank">
+        <i class="fab fa-twitch"></i> Twitch
+      </a>
+      <a href="https://www.youtube.com/@casualnerdingyt" class="social-button youtube" target="_blank">
+        <i class="fab fa-youtube"></i> YouTube
+      </a>
+      <a href="https://tiktok.com/@casualnerdingtv" class="social-button twitter" target="_blank">
+        <i class="fab fa-tiktok"></i> TikTok
+      </a>
+      <a href="https://www.instagram.com/@casualnerding" class="social-button instagram" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+    </div>
+    <div class="subscription-box">
+      <button id="subscribe-btn" class="glow-button">Добави +1 ейтака да има простоо </button>
+      <div class="subscriber-count">Абонати: <span id="sub-count">1,337</span></div>
+    </div>
+  </div>
+
+
+
+  <!-- Скорошни клипове -->
+  <div class="clips-container">
+    <h3>Топ моменти</h3>
+    <div class="clips-grid">
+      <div class="clip" data-video="jhdbL0kPHqg">
+        <div class="clip-thumbnail" style="background-image: url('https://img.youtube.com/vi/jhdbL0kPHqg/maxresdefault.jpg');">
+          <div class="play-button">▶</div>
+          <div class="clip-duration">0:30</div>
+        </div>
+        <div class="clip-title">Епичен момент от стрийма!</div>
+      </div>
+      <div class="clip" data-video="lFkt2goBhuY">
+        <div class="clip-thumbnail" style="background-image: url('https://img.youtube.com/vi/lFkt2goBhuY/maxresdefault.jpg');">
+          <div class="play-button">▶</div>
+          <div class="clip-duration">1:15</div>
+        </div>
+        <div class="clip-title">Тотално изненадващо!</div>
+      </div>
+      <div class="clip" data-video="qCcTDj1fO8E">
+        <div class="clip-thumbnail" style="background-image: url('https://img.youtube.com/vi/qCcTDj1fO8E/maxresdefault.jpg');">          
+          <div class="play-button">▶</div>
+          <div class="clip-duration">2:08:11</div>
+        </div>
+        <div class="clip-title">Не мога да повярвам!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Чат интеракции -->
+  <div class="chat-interactions">
+    <h3>Гласувай!</h3>
+    <div class="poll-container">
+      <div class="poll-question">Какво да играя следващия път?</div>
+      <div class="poll-options">
+        <div class="poll-option">
+          <div class="option-text">Minecraft</div>
+          <div class="option-bar">
+            <div class="option-progress" style="width: 45%"></div>
+          </div>
+          <div class="option-percentage">45%</div>
+        </div>
+        <div class="poll-option">
+          <div class="option-text">Fortnite</div>
+          <div class="option-bar">
+            <div class="option-progress" style="width: 25%"></div>
+          </div>
+          <div class="option-percentage">25%</div>
+        </div>
+        <div class="poll-option">
+          <div class="option-text">CS:GO</div>
+          <div class="option-bar">
+            <div class="option-progress" style="width: 30%"></div>
+          </div>
+          <div class="option-percentage">30%</div>
+        </div>
+      </div>
+      <button id="vote-btn" class="glow-button">Гласувай</button>
+    </div>
+  </div>
+
+  <!-- Банер за уведомления -->
+  <div class="notification-banner">
+    <div class="notification-text">
+      <span id="notification-message">Абонирай се за да получиш достъп до ексклузивни емотикони!</span>
+    </div>
+  </div>
+
+  <!-- Видео плейър за клипове -->
+  <div id="video-modal" class="video-modal">
+    <div class="video-container">
+      <div class="close-video">&times;</div>
+      <div id="video-player"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Font Awesome за иконите -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </html>
-*/
